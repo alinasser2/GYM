@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Mapper
-@Component
 public interface UserMapper {
     UserDto mapToDto(User user);
     User mapToEntity(UserDto dto);

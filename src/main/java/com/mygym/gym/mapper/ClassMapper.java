@@ -6,9 +6,8 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
-@Component
 public interface ClassMapper {
     ClassDto mapToDto(Classes classes);
-    Classes mapToDto(ClassDto dto);
+    Classes mapToEntity(ClassDto dto);
 
 }

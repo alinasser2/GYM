@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-10T14:52:21+0300",
+    date = "2023-08-12T23:40:05+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Amazon.com Inc.)"
 )
 public class UserSubscriptionMapperImpl implements UserSubscriptionMapper {
@@ -19,16 +19,22 @@ public class UserSubscriptionMapperImpl implements UserSubscriptionMapper {
 
         UserSubscriptionDto userSubscriptionDto = new UserSubscriptionDto();
 
+        userSubscriptionDto.setId( u.getId() );
+        userSubscriptionDto.setAmountPaid( u.getAmountPaid() );
+
         return userSubscriptionDto;
     }
 
     @Override
-    public UserSubscriptions mapToDto(UserSubscriptionDto u) {
+    public UserSubscriptions mapToEntity(UserSubscriptionDto u) {
         if ( u == null ) {
             return null;
         }
 
         UserSubscriptions userSubscriptions = new UserSubscriptions();
+
+        userSubscriptions.setId( u.getId() );
+        userSubscriptions.setAmountPaid( u.getAmountPaid() );
 
         return userSubscriptions;
     }

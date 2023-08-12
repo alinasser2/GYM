@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-10T14:52:22+0300",
+    date = "2023-08-12T23:40:05+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Amazon.com Inc.)"
 )
 public class OfferMapperImpl implements OfferMapper {
@@ -19,6 +19,12 @@ public class OfferMapperImpl implements OfferMapper {
 
         OfferDto offerDto = new OfferDto();
 
+        offerDto.setName( offer.getName() );
+        offerDto.setPercentage( offer.getPercentage() );
+        offerDto.setDescription( offer.getDescription() );
+        offerDto.setDuration( offer.getDuration() );
+        offerDto.setExpired( offer.isExpired() );
+
         return offerDto;
     }
 
@@ -29,6 +35,12 @@ public class OfferMapperImpl implements OfferMapper {
         }
 
         Offer offer1 = new Offer();
+
+        offer1.setName( offer.getName() );
+        offer1.setPercentage( offer.getPercentage() );
+        offer1.setDescription( offer.getDescription() );
+        offer1.setDuration( offer.getDuration() );
+        offer1.setExpired( offer.isExpired() );
 
         return offer1;
     }

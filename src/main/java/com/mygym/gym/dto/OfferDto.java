@@ -1,15 +1,22 @@
 package com.mygym.gym.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Time;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class OfferDto {
-    private int id;
     private String name;
     private int percentage;
     private String description;
-    private Time duration;
-
+    private LocalTime duration;
+    private boolean isExpired;
 }

@@ -22,7 +22,7 @@ public class Classes {
     @JsonProperty("dateTimes")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime dateTimes;
-    public Classes() {
+    public Classes(){
     }
 
     public Classes(String name, String description, int price, Time duration, int coachId, LocalDateTime dateTime) {
