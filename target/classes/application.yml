@@ -4,6 +4,7 @@ spring:
         password: root
         url: jdbc:mysql://localhost:3306/databasename
         username: root
+
     jpa:
         database-platform: org.hibernate.dialect.MySQLDialect
         show-sql: true
