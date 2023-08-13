@@ -1,6 +1,7 @@
 package com.mygym.gym.service.serviceImpl;
 
 import com.mygym.gym.dto.ClassDto;
+import com.mygym.gym.dto.UserSubscriptionDto;
 import com.mygym.gym.entity.Classes;
 import com.mygym.gym.entity.User;
 import com.mygym.gym.mapper.ClassMapper;
@@ -24,6 +25,13 @@ public class ClassServiceImpl implements ClassService {
 
     public boolean createClass(ClassDto classDto)
     {
+        validateInput(classDto);
+        Classes Class = mapper.mapToEntity(classDto);
+        classRepository.save(Class);
+        return true;
+    }
+
+    private void validateInput(ClassDto classDto) {
         if (classDto.getName().isEmpty()) {
             throw new ValidationException("Class name must not be empty");
         }
@@ -36,12 +44,20 @@ public class ClassServiceImpl implements ClassService {
         if (classDto.getCoachId() <= 0) {
             throw new ValidationException("Coach id must be greater than 0");
         }
+        isCoachExist(classDto);
+    }
+
+    private void isCoachExist(ClassDto classDto) {
         Optional<User> user = userRepository.findById(classDto.getCoachId());
         if(user.isEmpty() || !user.get().isEmployee()) {
             throw new ValidationException("No coach with this id");
         }
-        Classes Class = mapper.mapToEntity(classDto);
-        classRepository.save(Class);
+    }
+
+    public boolean subscribe(UserSubscriptionDto dto)
+    {
+        Classes Class = dto.getClasses();
+        dto.setAmountPaid(Class.getPrice());
         return true;
     }
 }

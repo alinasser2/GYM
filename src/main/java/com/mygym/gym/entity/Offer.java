@@ -1,12 +1,9 @@
 package com.mygym.gym.entity;
-import lombok.Data;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
-import java.sql.Time;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -45,7 +42,5 @@ public class Offer {
         LocalDateTime now = LocalDateTime.now();
         return now.isAfter(this.startTime.plusMinutes(this.duration.getMinute()));
     }
-
-
 }
 

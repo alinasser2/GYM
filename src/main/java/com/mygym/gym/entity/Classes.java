@@ -18,6 +18,7 @@ public class Classes {
     private String description;
     private int price;
     private Time duration;
+    @Column(nullable = false)
     private int coachId;
     @JsonProperty("dateTimes")
     @JsonFormat(pattern = "yyyy-MM-dd")

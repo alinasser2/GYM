@@ -1,8 +1,12 @@
 package com.mygym.gym.service.serviceImpl;
 
 import com.mygym.gym.dto.UserDto;
+import com.mygym.gym.dto.UserSubscriptionDto;
+import com.mygym.gym.entity.Classes;
 import com.mygym.gym.entity.User;
+import com.mygym.gym.mapper.ClassMapper;
 import com.mygym.gym.mapper.UserMapper;
+import com.mygym.gym.repository.ClassesRepository;
 import com.mygym.gym.repository.UsersRepository;
 import com.mygym.gym.service.UserService;
 import jakarta.validation.ValidationException;
@@ -18,6 +22,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UsersRepository repository;
     private final UserMapper mapper;
+    private final ClassesRepository classRepository;
 
     @Override
     public UserDto retrieveUser(int id) {
@@ -32,4 +37,14 @@ public class UserServiceImpl implements UserService {
         }
         return mapper.mapToDto(user.get());
     }
+
+    public boolean signup(UserDto dto)
+    {
+            User user = mapper.mapToEntity(dto);
+            repository.save(user);
+            return true;
+    }
+
+
+
 }

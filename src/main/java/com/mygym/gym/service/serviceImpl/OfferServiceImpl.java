@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Random;
+
 @RequiredArgsConstructor
 @Validated
 @Service
@@ -21,12 +23,34 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public boolean createOffer(OfferDto dto) {
-        if(dto.getPercentage() <= 0)
-        {
-            throw new ValidationException("Offer percentage must be greater than 0");
-        }
+        validateInput(dto);
+        setRandomUniquePromocode(dto);
         Offer offer = mapper.mapToEntity(dto);
         repository.save(offer);
         return true;
     }
+
+    private static void validateInput(OfferDto dto) {
+        if(dto.getPercentage() <= 0)
+        {
+            throw new ValidationException("Offer percentage must be greater than 0");
+        }
+    }
+
+    private void setRandomUniquePromocode(OfferDto dto) {
+        String promocode;
+        do
+        {
+            promocode = "df"+getRandomNumber(0,100);
+        }
+        while(repository.findByName(promocode));
+        dto.setName(promocode);
+    }
+
+    int getRandomNumber(int min,int max)
+    {
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
+
 }
