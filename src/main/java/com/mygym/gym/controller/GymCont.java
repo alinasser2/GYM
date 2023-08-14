@@ -3,6 +3,8 @@ package com.mygym.gym.controller;
 import com.mygym.gym.dto.*;
 import com.mygym.gym.service.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +18,13 @@ public class GymCont {
     private final OfferService offerService;
 
 
+    private static final Logger logger = LoggerFactory.getLogger(GymCont.class);
 
     @GetMapping("/{id}")
     public ResponseEntity<String> userData(@PathVariable("id") int id)
     {
 
+        logger.error("This is an ERROR level message");
         try {
             UserDto dto = userservice.retrieveUser(id);
             return ResponseEntity.ok(dto.toString());

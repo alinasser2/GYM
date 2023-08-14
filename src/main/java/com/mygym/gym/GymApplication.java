@@ -22,7 +22,7 @@ public class GymApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println(repository.findById(1).get().isExpired());
+//        System.out.println(repository.findById(1).get().isExpired());
 
     }
 }

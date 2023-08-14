@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table
+      author: your-name
+      changes:
+        - createTable:
+            tableName: mytable
+            columns:
+              - column:
+                  name: id
+                  type: int
+              - column:
+                  name: name
+                  type: varchar(255)

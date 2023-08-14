@@ -23,9 +23,7 @@ public class User {
     @Column(nullable = true)
     private int managerId;
     private LocalDateTime dateOfBirth;
-
     public User(){}
-
     public User(int hourlyRate, String name, String email, String password, int budget, boolean is_employee, int manager_id, LocalDateTime dateOfBirth) {
         this.name = name;
         this.email = email;
