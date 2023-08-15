@@ -22,4 +22,4 @@ spring:
     logging:
         level:
             root: trace
-            org.springframework: INFO
+            org.springframework: trace

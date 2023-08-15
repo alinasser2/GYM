@@ -2,10 +2,16 @@ package com.mygym.gym.controller;
 
 import com.mygym.gym.dto.*;
 import com.mygym.gym.service.*;
+import com.mygym.gym.service.serviceImpl.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -16,14 +22,16 @@ public class GymCont {
     private final ClassService classservice;
     private final UserService userservice;
     private final OfferService offerService;
+    private final JwtService jwt;
+    private final AuthenticationManager authenticationmanager;
 
 
     private static final Logger logger = LoggerFactory.getLogger(GymCont.class);
 
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<String> userData(@PathVariable("id") int id)
     {
-
         logger.error("This is an ERROR level message");
         try {
             UserDto dto = userservice.retrieveUser(id);
@@ -67,7 +75,13 @@ public class GymCont {
         try
         {
             userservice.signup(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("user created successfully");
+            Authentication authentication = authenticationmanager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
+            if(authentication.isAuthenticated())
+            {
+                return ResponseEntity.status(HttpStatus.CREATED).body(jwt.generateToken(dto.getEmail()));
+            }
+             throw new Exception("user not found");
+
         }
         catch(Exception e)
         {

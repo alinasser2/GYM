@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-15T11:59:17+0300",
+    date = "2023-08-15T16:13:47+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.8 (Amazon.com Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -21,6 +21,7 @@ public class UserMapperImpl implements UserMapper {
 
         userDto.setId( user.getId() );
         userDto.setName( user.getName() );
+        userDto.setPassword( user.getPassword() );
         userDto.setEmail( user.getEmail() );
         userDto.setBudget( user.getBudget() );
         userDto.setHourlyRate( user.getHourlyRate() );
@@ -42,6 +43,7 @@ public class UserMapperImpl implements UserMapper {
         user.setId( dto.getId() );
         user.setName( dto.getName() );
         user.setEmail( dto.getEmail() );
+        user.setPassword( dto.getPassword() );
         user.setBudget( dto.getBudget() );
         user.setHourlyRate( dto.getHourlyRate() );
         user.setEmployee( dto.isEmployee() );

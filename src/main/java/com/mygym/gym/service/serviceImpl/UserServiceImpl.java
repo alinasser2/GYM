@@ -1,30 +1,36 @@
 package com.mygym.gym.service.serviceImpl;
 
 import com.mygym.gym.dto.UserDto;
-import com.mygym.gym.dto.UserSubscriptionDto;
-import com.mygym.gym.entity.Classes;
 import com.mygym.gym.entity.User;
-import com.mygym.gym.mapper.ClassMapper;
 import com.mygym.gym.mapper.UserMapper;
 import com.mygym.gym.repository.ClassesRepository;
 import com.mygym.gym.repository.UsersRepository;
 import com.mygym.gym.service.UserService;
 import jakarta.validation.ValidationException;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+@NoArgsConstructor
 @Service
+@Primary
 public class UserServiceImpl implements UserService {
-    private final UsersRepository repository;
-    private final UserMapper mapper;
-    private final ClassesRepository classRepository;
+    @Autowired
+    private UsersRepository repository;
+    @Autowired
+
+    private UserMapper mapper;
+    @Autowired
+
+    private ClassesRepository classRepository;
 
     @Override
     public UserDto retrieveUser(int id) {
@@ -43,6 +49,8 @@ public class UserServiceImpl implements UserService {
     public boolean signup(UserDto dto)
     {
             User user = mapper.mapToEntity(dto);
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(user.getPassword()));
             repository.save(user);
             return true;
     }
@@ -53,5 +61,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        User user = repository.findByName(username);
+//
+//    }
 }

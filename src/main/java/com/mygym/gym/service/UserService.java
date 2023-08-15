@@ -12,4 +12,5 @@ public interface UserService {
     public boolean signup(UserDto dto);
 
     public List<User> retrieveAll();
+
     }

@@ -34,4 +34,6 @@ public class User {
         this.managerId = manager_id;
         this.dateOfBirth = dateOfBirth;
     }
+
+
 }
