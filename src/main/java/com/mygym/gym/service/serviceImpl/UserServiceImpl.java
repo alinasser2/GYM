@@ -12,7 +12,9 @@ import com.mygym.gym.service.UserService;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -43,6 +45,11 @@ public class UserServiceImpl implements UserService {
             User user = mapper.mapToEntity(dto);
             repository.save(user);
             return true;
+    }
+
+    public List<User> retrieveAll(){
+
+        return repository.findAll();
     }
 
 

@@ -52,11 +52,27 @@ public class GymCont {
         try
         {
             offerService.createOffer(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Class created successfully");
+            return ResponseEntity.status(HttpStatus.CREATED).body("offer created successfully");
         }
         catch(Exception e)
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody UserDto dto)
+    {
+        try
+        {
+            userservice.signup(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body("user created successfully");
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
     }
 }
