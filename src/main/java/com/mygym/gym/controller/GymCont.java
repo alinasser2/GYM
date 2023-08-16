@@ -29,7 +29,7 @@ public class GymCont {
     private static final Logger logger = LoggerFactory.getLogger(GymCont.class);
 
     @GetMapping("/{id}")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<String> userData(@PathVariable("id") int id)
     {
         logger.error("This is an ERROR level message");
@@ -81,12 +81,28 @@ public class GymCont {
                 return ResponseEntity.status(HttpStatus.CREATED).body(jwt.generateToken(dto.getEmail()));
             }
              throw new Exception("user not found");
-
         }
         catch(Exception e)
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthRequest request)
+    {
+        try
+        {
+            Authentication authentication = authenticationmanager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            if(authentication.isAuthenticated())
+            {
+                return ResponseEntity.status(HttpStatus.CREATED).body(jwt.generateToken(request.getEmail()));
+            }
+            throw new Exception("bad credentials");
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

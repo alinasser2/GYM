@@ -9,14 +9,14 @@ spring:
         database-platform: org.hibernate.dialect.MySQLDialect
         show-sql: true
         hibernate:
-            ddl-auto: none
+            ddl-auto: update
     flyway:
         enabled: false
         locations: classpath:db/migration
         baseline-on-migrate: true
 
     liquibase:
-        enabled: true
+        enabled: false
         change-log: classpath:db/changelog/changelog-master.xml
 
     logging:
