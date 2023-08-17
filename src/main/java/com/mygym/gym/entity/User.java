@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private int managerId;
     private LocalDateTime dateOfBirth;
     private Role role = Role.ROLE_USER;
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
     public User(){}
     public User(int hourlyRate, String name, String email, String password, int budget, boolean is_employee, int manager_id, LocalDateTime dateOfBirth) {
         this.name = name;

@@ -4,6 +4,7 @@ import com.mygym.gym.dto.UserDto;
 import com.mygym.gym.entity.User;
 import com.mygym.gym.mapper.UserMapper;
 import com.mygym.gym.repository.ClassesRepository;
+import com.mygym.gym.repository.TokenRepository;
 import com.mygym.gym.repository.UsersRepository;
 import com.mygym.gym.service.UserService;
 import jakarta.validation.ValidationException;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper mapper;
     @Autowired
 
-    private ClassesRepository classRepository;
+    private TokenRepository tokenRepository;
 
     @Override
     public UserDto retrieveUser(int id) {
@@ -58,6 +59,26 @@ public class UserServiceImpl implements UserService {
     public List<User> retrieveAll(){
 
         return repository.findAll();
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    public void revokeAllUserTokens(int userId) {
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(userId);
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
+    }
+    public Optional<User> findById(int id)
+    {
+        return repository.findById(id);
     }
 
 

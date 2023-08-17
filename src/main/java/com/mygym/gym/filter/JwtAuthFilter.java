@@ -2,6 +2,7 @@ package com.mygym.gym.filter;
 
 import com.mygym.gym.entity.User;
 import com.mygym.gym.mapper.UserMapper;
+import com.mygym.gym.repository.TokenRepository;
 import com.mygym.gym.repository.UsersRepository;
 import com.mygym.gym.service.serviceImpl.JwtService;
 import jakarta.servlet.FilterChain;
@@ -24,6 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserMapper mapper;
+    private final TokenRepository tokenRepository;
 
     @Autowired
     private UsersRepository repository;
@@ -40,8 +42,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user = repository.findByEmail(email);
-            System.out.println(user);
-            if (jwtService.validateToken(token, mapper.mapToDto(user))) {
+            boolean isTokenValid = tokenRepository.findByToken(token)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+            if (jwtService.validateToken(token, mapper.mapToDto(user)) && isTokenValid) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
